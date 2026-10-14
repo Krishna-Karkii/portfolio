@@ -1,20 +1,11 @@
 import './App.css'
+import Navbar from './Navbar'
 
 function App() {
 
   return (
     <main>
-      <header>
-        <a href="/" className="site-name">
-          Engineering Notebook
-        </a>
-
-        <nav aria-label="Main navigation">
-          <a href="#projects">Projects</a>
-          <a href="#research">Research Notes</a>
-          <a href="#about">About</a>
-        </nav>
-      </header>
+      <Navbar />
 
       <section className="hero">
         <p>AI SYSTEMS · SOFTWARE ENGINEERING</p>
