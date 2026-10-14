@@ -1,5 +1,8 @@
 import './App.css'
 import Navbar from './Navbar'
+import ProjectCard from './ProjectCard'
+import projects from './data/projects'
+import BlogPost from './BlogPost'
 
 function App() {
 
@@ -25,13 +28,25 @@ function App() {
       </section>
 
       <section id="projects">
-        <h2>Selected Projects</h2>
-        <p>Engineering projects, experiments, and things I'm learning by building.</p>
+        <h2>Projects</h2>
+        <div className="project-grid">
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              technologies={project.technologies}
+              githubUrl={project.githubUrl}
+              demoUrl={project.demoUrl}
+            />
+          ))}
+        </div>
       </section>
 
       <section id="research">
         <h2>Research Notes</h2>
         <p>My notes on mathematics, machine learning, and computer systems.</p>
+        <BlogPost />
       </section>
 
       <section id="about">
