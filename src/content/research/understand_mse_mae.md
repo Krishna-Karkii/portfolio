@@ -1,36 +1,31 @@
+---
+title: Understanding mean squared error
+date: 2026-10-14
+status: open   # open | answered | revised
+tags: [math, ml]
+summary: Why models square their errors, and what that does to gradient descent.
+---
 
-# Understanding Mean Squared Error
+## Concept
 
-I'm studying how machine learning models measure their prediction errors.
+I'm studying how machine learning models measure their prediction errors. A model predicts $\hat{y}$ for a true value $y$, and the error is
 
-## The problem
+$$
+e = y - \hat{y}
+$$
 
-Suppose a model predicts a value called `y_pred`, while the actual value is `y_true`.
+Errors can be positive or negative, so adding them directly can hide how wrong the model is. Mean squared error squares each error first, then averages over $n$ observations:
 
-The error is:
+$$
+\mathrm{MSE} = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2
+$$
 
-\[
-e = y_{\text{true}} - y_{\text{pred}}
-\]
+## Question
 
-Errors can be positive or negative. Simply adding them can hide how wrong the model is.
-
-## Mean Squared Error
-
-Mean Squared Error (MSE) squares each error and then calculates their average.
-
-For n observations:
-
-\[
-MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2
-\]
-
-## Questions I'm investigating
-
-- Why do we square errors instead of using absolute values?
+- Why square errors instead of using absolute values?
 - How does MSE affect gradient descent?
 - What happens when a model makes a very large error?
 
-## Current status
+## Experiment / proof
 
-This is an ongoing research note. I'll add experiments and results as I implement linear regression from scratch.
+Planned: fit a line from scratch with MSE and with mean absolute error (MAE), with and without a single outlier, and compare how far each fit moves. Not run yet.

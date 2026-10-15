@@ -1,16 +1,38 @@
-# React + Vite
+# Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal site: projects and research notes on backend engineering, machine learning and computer systems. React 19, Vite, React Router.
 
-Currently, two official plugins are available:
+## Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run lint
+npm run build
+```
 
-## React Compiler
+## Make it yours
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Name, role, intro and links live in `src/data/site.js`; empty values are hidden. Keep the `<title>` and description in `index.html` in sync. For a resume link, put `resume.pdf` in `public/` and set `resume: '/resume.pdf'`.
 
-## Expanding the ESLint configuration
+## Add a research note
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Copy `src/content/research/_template.md` to a new file in the same folder and fill it in. Notes are picked up automatically, sorted by `date`, and support Markdown, GFM tables and LaTeX (`$…$`, `$$…$$`).
+
+## Design decisions
+
+- **Notes are Markdown files loaded at build time** with `import.meta.glob`. No CMS or backend, so publishing a note is a commit. Cost: every note ships in the main bundle. Fine for dozens; revisit at hundreds.
+- **Markdown and KaTeX are code-split.** Only the note page loads `react-markdown` and KaTeX, so the home page stays light.
+- **Client-side SPA.** Simple, and good React practice. Cost: every URL serves the same `<title>` and meta tags to link-preview crawlers, which don't run JavaScript. If previews start to matter, move to static generation.
+- **Static hosts need a fallback to `index.html`**, because `/research` is not a file on disk. `vercel.json` provides it for Vercel; other hosts need an equivalent rewrite.
+
+## Structure
+
+```
+src/
+  components/        layout, navbar, shared UI
+  pages/             one file per route
+  lib/               note loading, page titles
+  content/research/  notes (Markdown + frontmatter)
+  data/              site.js, projects.js
+```

@@ -1,60 +1,25 @@
+import { lazy } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Navbar from './Navbar'
-import ProjectCard from './ProjectCard'
-import projects from './data/projects'
-import BlogPost from './BlogPost'
+import Layout from './components/Layout'
+import Home from './pages/Home'
+import Research from './pages/Research'
+import NotFound from './pages/NotFound'
 
-function App() {
+// Carries react-markdown + KaTeX, so it loads only when a note is opened.
+const Note = lazy(() => import('./pages/Note'))
 
+export default function App() {
   return (
-    <main>
-      <Navbar />
-
-      <section className="hero">
-        <p>AI SYSTEMS · SOFTWARE ENGINEERING</p>
-
-        <h1>
-          Learning how systems work.
-          <br />
-          Building them from first principles.
-        </h1>
-
-        <p>
-          I build software, experiment with machine learning,
-          and document what I learn along the way.
-        </p>
-
-        <a href="#projects">Explore my work →</a>
-      </section>
-
-      <section id="projects">
-        <h2>Projects</h2>
-        <div className="project-grid">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              title={project.title}
-              description={project.description}
-              technologies={project.technologies}
-              githubUrl={project.githubUrl}
-              demoUrl={project.demoUrl}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section id="research">
-        <h2>Research Notes</h2>
-        <p>My notes on mathematics, machine learning, and computer systems.</p>
-        <BlogPost />
-      </section>
-
-      <section id="about">
-        <h2>About</h2>
-        <p>I'm developing my skills in AI engineering and systems programming.</p>
-      </section>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="research" element={<Research />} />
+          <Route path="research/:slug" element={<Note />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
